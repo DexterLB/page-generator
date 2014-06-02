@@ -52,11 +52,6 @@ class Item(object):
 
         self.time = int(values.get('time', 0))
 
-        self.metatitle = values.get('metatitle', self.title)
-        self.metadescription = values.get('metadescription', self.description)
-        self.metakeywords = values.get('metakeywords', '')
-
-
         self.sortby = values.get('sortby', 'time title')
         self.sortreverse = (values.get('sortreverse', 'true')) == 'true'
 
