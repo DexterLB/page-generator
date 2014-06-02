@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>{{ item.metatitle }} - {{ glob.displaytitle }}</title>
+        <link rel="canonical" href="{{ item.url }}" />
+        <meta name="description" content="{{ item.metadescription }}" />
+        <meta name="keywords" content="{{ item.metakeywords }} {{ glob.keywords }}" />
+        {% if item._author is not none -%}
+        <meta name="author" content="{{ item._author.meta }}" />
+        {% if item._author.header is not none -%}{{ item._author.header }}{% endif %}
+        {% endif -%}
+        <link rel="stylesheet" type="text/css" href="/styles/highlight.css" />
+        <link rel="stylesheet" type="text/css" href="/styles/main.css" />
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans" />
+    </head>
+    <body class="{{ ' '.join(item.classes.body) }}">
+        <div class="mainframe" id="mainframe">
+            <div class="banner" id="banner">
+                <div class="logo"><a href="/"><img alt="{{ glob.displaytitle }}" src="/static/logo.png" title=":)" /></a></div>
+                <div class="bblock">
+                    <ul class="primarylinks" id="primarylinks">
+                        <li class="pl-front"><a href="/">front</a></li>
+                        <li class="pl-ls"><a href="/ls">contents</a></li>
+                        <li class="pl-about"><a href="/about">about</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="container" id="container">
+                <div class="infoblock">
+                    <div class="paths">
+                        {%- for path in item.paths() %}
+                        <div class="path">
+                            {% for i in path -%}
+                            <a href="{{ i.url }}">{{ i.title }}/</a>
+                            {%- endfor %}
+                        </div>
+                        {%- endfor %}
+                    </div>
+                </div>
+                <div class="content" id="content">
+                    {#-
+                    <div class="navigation">
+
+                        <div class="block left">
+                            {% if navigation['latest'] is defined %}
+                            <a class="button latest" href="{{ navigation['latest']['href'] }}" title="{{ navigation['latest']['title']">latest </a>
+                            {% endif %}
+                            {% if navigation['newer'] is defined %}
+                            <a class="button newer" href="{{ navigation['newer']['href'] }}" title="{{ navigation['newer']['title']"> newer</a>
+                            {% endif %}
+                        </div>
+                        <div class="block right">
+                            {% if navigation['older'] is defined %}
+                            <a class="button older" href="{{ navigation['older']['href'] }}" title="{{ navigation['latest']['title']">older </a>
+                            {% endif %}
+                            {% if navigation['oldest'] is defined %}
+                            <a class="button oldest" href="{{ navigation['oldest']['href'] }}" title="{{ navigation['oldest']['title']"> oldest</a>
+                            {% endif %}
+                        </div>
+                        <div class="dummy"></div>
+                    </div>
+                    -#}
+                    {% if item.badge -%}
+                    <div class="badge">
+                        <div class="date"><span title="{{ item.time|formattime('long') }} UTC @{{ item.time|formattime('time_t') }}">{{ item.time|formattime('short') }}</span></div>
+                        {% if item._author is not none -%}
+                        <div class="author">by&#160;
+                            {%- if item._author.url is none -%}
+                            <span class="authorspan" title="{{ item._author.longname }}">{{ item._author.shortname }}</span>
+                            {%- else -%}
+                            <a class="authorlink" href="{{ item._author.url }}" title="{{ item._author.longname }}">{{ item._author.shortname }}</a>
+                            {%- endif -%}
+                        </div>
+                        {%- endif %}
+                    </div>
+                    {%- endif %}
+                    <div class="box item">{{ item.realContent() }}</div>
+                    <div class="dummy"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

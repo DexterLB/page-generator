@@ -1,0 +1,10 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+{% set target = item._items.get(attr.gpop('item'), item) %}
+
+<div xmlns="http://www.w3.org/1999/xhtml" class="{{ ' '.join(['ls'] + target.classes.ls) }} {{ attr.gpop('class') }}" {{ attr.fmt() }}>
+    ls for {{ target.title }}
+    {% for child in target._children if child.visible -%}
+    <lsi item="{{ child.item._name }}" />
+    {%- endfor %}
+</div>
