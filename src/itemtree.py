@@ -26,17 +26,17 @@ class ItemTree(object):
         '''
         self.items = {}
         self.authors = {}
-        flist = []
+        filenames = []
         for root, subfolders, files in os.walk(path, followlinks = True):
             for f in files:
                 if not f.endswith('.conf'):
                     continue
-                flist.append(os.path.join(root, f))
+                filenames.append(os.path.join(root, f))
 
         cp = configparser.RawConfigParser()
-        slist = cp.read(flist)
-        # TODO: intersect slist with flist and display errors
-        print('[itemtree] parsed: ', slist)
+        correct_filenames = cp.read(filenames)
+        # TODO: intersect correct_filenames with filenames and display errors
+        print('[itemtree] parsed: ', correct_filenames)
         for section in cp.sections():
             values = dict(cp.items(section))
             stype = values.get('type')
