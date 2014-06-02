@@ -59,12 +59,12 @@ class ItemTree(object):
                 # group 1 is the name
                 parentItem = self.items[g[1]]
                 visible = '@' not in g[0]
-                i._parents.append(item.Parent(
+                i.q_parents.append(item.Parent(
                     itemObject = parentItem
                     , hasMeVisible = visible
                     , visibleInPathList = '&' not in g[0]))
 
-                parentItem._children.append(item.Child(
+                parentItem.q_children.append(item.Child(
                     itemObject = i
                     , visible = visible))
 
@@ -73,7 +73,7 @@ class ItemTree(object):
         Currently just assigns authors.
         '''
         for i in self.items.values():
-            i._author = self.authors[i.author]
+            i.q_author = self.authors[i.author]
             i.preprocess()
 
     def writeAll(self):
@@ -94,9 +94,9 @@ if __name__ == '__main__':
         v_d(item.__dict__)
         print(
                 "parents: "
-                , [parent.item._name for parent in item._parents])
+                , [parent.item._name for parent in item.q_parents])
         print(
                 "children: "
-                , [child.item._name for child in item._children])
+                , [child.item._name for child in item.q_children])
         print("\n\n ------------ \n\n")
 

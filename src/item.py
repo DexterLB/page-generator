@@ -36,8 +36,8 @@ class Item(object):
             self.parents = values['parents'].split(' ')
         except KeyError:
             self.parents = []
-        self._parents = []
-        self._children = []
+        self.q_parents = []
+        self.q_children = []
 
         self.urlBasename = self.getUrlBasename(values.get('url'))
         self.url = self.getUrl(self.urlBasename)
@@ -48,7 +48,7 @@ class Item(object):
         self.description = values.get('description', '')
         self.author = values.get('author', glob.author)
 
-        self._author = None
+        self.q_author = None
 
         self.time = int(values.get('time', 0))
 
@@ -123,10 +123,10 @@ class Item(object):
             nlist = []
             more = False    # FIXME
             for p in plist:
-                if not p[0]._parents:
+                if not p[0].q_parents:
                     nlist.append(p)
                 else:
-                    for parent in p[0]._parents:
+                    for parent in p[0].q_parents:
                         if keepInvisible or parent.visibleInPathList:
                             nlist.append([parent.item] + p)
                             more = True
@@ -148,9 +148,9 @@ class Item(object):
         return self.text or self.contentFromFile()
 
     def sortChildren(self):
-        '''Sorts self._children as stated by self.sortby
+        '''Sorts self.q_children as stated by self.sortby
         '''
-        self._children.sort(
+        self.q_children.sort(
                 key=attrgetter(*tuple(map(
                     lambda t: 'item.' + t
                     , self.sortby.split(' ')
